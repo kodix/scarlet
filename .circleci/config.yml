@@ -1,0 +1,22 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+    - image: circleci/node:lts
+      user: root
+    working_directory: /usr/src/scarlet
+    steps:
+    - checkout
+    - run:
+        name: Install dependencies
+        command: npm i
+    - run:
+        name: Lint
+        command: npm run lint
+
+workflows:
+  version: 2
+  github.com:
+    jobs:
+    - build
