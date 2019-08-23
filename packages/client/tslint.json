@@ -1,5 +1,5 @@
 {
-  "extends": ["tslint-immutable"],
+  "extends": ["tslint-config-airbnb"],
   "rules": {
     "no-var-keyword": true,
     "no-parameter-reassignment": true,
