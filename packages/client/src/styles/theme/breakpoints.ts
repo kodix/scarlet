@@ -1,4 +1,11 @@
-export default {
+export type Breakpoint = {
+  breakPoint: number;
+  gutter: string;
+  containerPadding: string;
+  colCount: number;
+};
+
+export const breakpoints: { [breakpoint: string]: Breakpoint } = {
   mobile: {
     breakPoint: 0,
     gutter: '10px',
