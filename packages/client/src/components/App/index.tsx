@@ -32,10 +32,13 @@ const wsLink = new WebSocketLink(client);
 const terminatingLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
-    return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
+    return (
+      definition.kind === 'OperationDefinition' &&
+      (definition.operation === 'query' || definition.operation === 'subscription')
+    );
   },
-  wsLink,
-  httpLink
+  wsLink
+  // httpLink
 );
 
 const apolloClient = new ApolloClient({
