@@ -14,6 +14,14 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      // {
+      //   test: /\.(woff|woff2|eot|ttf|svg)$/,
+      //   use: { loader: 'file?name=fonts/[name].[ext]' },
+      // },
+      {
         test: /\.(ts|js)x?$/,
         exclude: /node_modules/,
         use: {
