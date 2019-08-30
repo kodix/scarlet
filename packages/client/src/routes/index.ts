@@ -1,4 +1,5 @@
 import RouteComponent from '../components/DefaultRouteComponent';
+import AnotherRouteComponent from '../components/AnotherRouteComponent';
 
 export default [
   {
@@ -11,7 +12,7 @@ export default [
     label: 'route1',
     name: 'route1',
     path: '/route1',
-    RouteComponent,
+    RouteComponent: AnotherRouteComponent,
   },
   {
     label: 'route2',
