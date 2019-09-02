@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { useObserver } from 'mobx-react-lite';
 import styled, { ThemeProvider, css } from 'styled-components';
 import { StylesProvider } from '@material-ui/styles';
-import Button from '@material-ui/core/Button';
 import theme from '../../styles/theme';
 import StoreProvider, { useRoutes } from '../StoreContext';
 
@@ -53,23 +52,12 @@ const RouteViewList: React.FC = () => {
   ));
 };
 
-const StyledButton = styled(Button)`
-  background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
-  border-radius: 3px;
-  border: 0;
-  color: white;
-  height: 48px;
-  padding: 0 30px;
-  box-shadow: 0 3px 5px 2px rgba(255, 105, 135, 0.3);
-`;
-
 const App: React.FC = () => {
   return (
     <StoreProvider>
       <StylesProvider injectFirst>
         <ThemeProvider theme={theme}>
           <>
-            <StyledButton>test</StyledButton>
             <Router>
               <RouteLinksList />
 
