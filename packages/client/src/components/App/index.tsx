@@ -15,13 +15,10 @@ import Button from '@material-ui/core/Button';
 import theme from '../../styles/theme';
 import StoreProvider, { useRoutes } from '../StoreContext';
 
-const GRAPHQL_ENDPOINT = 'ws://localhost:4000/graphql';
+const GRAPHQL_ENDPOINT = 'ws://172.20.0.3:1080';
 
 const client = new SubscriptionClient(`${GRAPHQL_ENDPOINT}`, {
   reconnect: true,
-  connectionParams: {
-    authToken: '21312',
-  },
 });
 
 const wsLink = new WebSocketLink(client);
@@ -41,14 +38,11 @@ const apolloClient = new ApolloClient({
 
 const GET_HELLO = gql`
   query {
-    messages {
-      id
-      content
-    }
+    message
   }
 `;
 
-const MESSAGE_CREATED = gql`
+const HELLO_SUBSCRIPTION = gql`
   subscription {
     messageCreated {
       id
@@ -108,21 +102,21 @@ const RouteViewList: React.FC = () => {
 };
 
 const GqlTest: React.FC = () => {
-  const { loading, data, subscribeToMore } = useQuery(GET_HELLO);
+  const { loading, data } = useQuery(GET_HELLO);
 
-  useEffect(() => {
-    return subscribeToMore({
-      document: MESSAGE_CREATED,
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev;
+  // useEffect(() => {
+  //   return subscribeToMore({
+  //     document: MESSAGE_CREATED,
+  //     updateQuery: (prev, { subscriptionData }) => {
+  //       if (!subscriptionData.data) return prev;
 
-        const newFeedItem = subscriptionData.data.messageCreated;
-        return Object.assign({}, prev, {
-          messages: [...prev.messages, newFeedItem],
-        });
-      },
-    });
-  }, []);
+  //       const newFeedItem = subscriptionData.data.messageCreated;
+  //       return Object.assign({}, prev, {
+  //         messages: [...prev.messages, newFeedItem],
+  //       });
+  //     },
+  //   });
+  // }, []);
   if (loading) {
     return <div>isLoading</div>;
   }
@@ -150,6 +144,18 @@ const StyledButton = styled(Button)`
   box-shadow: 0 3px 5px 2px rgba(255, 105, 135, 0.3);
 `;
 
+const GQL: React.FC = () => {
+  const { loading, data } = useQuery(GET_HELLO);
+
+  console.log(loading, data);
+
+  if (loading) {
+    return null;
+  }
+
+  return <div>{JSON.stringify(data)}</div>;
+};
+
 const App: React.FC = () => {
   return (
     <ApolloProvider client={apolloClient}>
@@ -157,14 +163,7 @@ const App: React.FC = () => {
         <StylesProvider injectFirst>
           <ThemeProvider theme={theme}>
             <>
-              <StyledButton>test</StyledButton>
-              <Router>
-                <RouteLinksList />
-
-                <StyledDiv>
-                  <RouteViewList />
-                </StyledDiv>
-              </Router>
+              <GQL />
             </>
           </ThemeProvider>
         </StylesProvider>
